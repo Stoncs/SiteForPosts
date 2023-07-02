@@ -1,0 +1,152 @@
+$primary-color: #6a8db3;
+$secondary-color: #f9bcaa;
+$accent-color: #c4dce6;
+$text-color: #333;
+$background-color: #f4f8f9;
+
+@import './../generalScss/fonts.scss';
+
+.post_list_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $background-color;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  font-family: $font-primary;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.h1 {
+  text-align: center;
+  color: $text-color;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+select {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  padding: 8px;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  width: 80%;
+  font-size: 16px;
+  background-color: $accent-color;
+  color: $text-color;
+}
+
+.posts {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+  &__enter_active {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  &__enter {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  &__exit_active {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  &__exit {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.post {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #e5e7ff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: $text-color;
+  ::first-letter {
+    text-transform: uppercase;
+  }
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #cbcfff;
+    cursor: pointer;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  &__body {
+    font-size: 16px;
+    line-height: 1.5em;
+  }
+
+  &__author {
+    display: block;
+    font-size: 16px;
+    text-align: right;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .post_list_container {
+    padding: 10px;
+  }
+
+  .h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  select {
+    padding: 6px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .post {
+    padding: 10px;
+    font-size: 14px;
+
+    &__title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.2em;
+      margin-bottom: 0.7em;
+    }
+
+    &__body {
+      font-size: 15px;
+      line-height: 1.2em;
+    }
+
+    &__author {
+      display: block;
+      font-size: 15px;
+      text-align: right;
+      margin-top: 5px;
+    }
+  }
+}

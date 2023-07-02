@@ -8,7 +8,7 @@ export const fetchAllPosts = async () => {
 };
 
 export const fetchPostsByUserId = async (userId) => {
-  const { data } = await $host.get(`${url}?&userId=${userId}`);
+  const { data } = await $host.get(`${url}/getByUserId/${userId}`);
   return data;
 };
 
