@@ -2,13 +2,15 @@ import { $host } from '.';
 
 const url = 'api/posts';
 
-export const fetchAllPosts = async () => {
-  const { data } = await $host.get(url);
+export const fetchAllPosts = async (page, limit) => {
+  const { data } = await $host.get(url, { params: { page, limit } });
   return data;
 };
 
-export const fetchPostsByUserId = async (userId) => {
-  const { data } = await $host.get(`${url}/getByUserId/${userId}`);
+export const fetchPostsByUserId = async (userId, page, limit) => {
+  const { data } = await $host.get(`${url}/getByUserId/${userId}`, {
+    params: { page, limit },
+  });
   return data;
 };
 

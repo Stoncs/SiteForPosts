@@ -1,10 +1,11 @@
-$primary-color: #6a8db3;
-$secondary-color: #f9bcaa;
 $accent-color: #c4dce6;
 $text-color: #333;
 $background-color: #f4f8f9;
+$main-color: #e5e7ff;
+$main-color-hover: #cbcfff;
 
 @import './../generalScss/fonts.scss';
+@import './../generalScss/colors.scss';
 
 .post_list_container {
   max-width: 800px;
@@ -54,7 +55,7 @@ select {
   opacity: 1;
   transform: translateY(0px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-
+  margin-bottom: 60px;
   &__enter_active {
     opacity: 0;
     transform: translateY(-20px);
@@ -76,7 +77,7 @@ select {
 .post {
   margin-bottom: 20px;
   padding: 20px;
-  background-color: #e5e7ff;
+  background-color: $main-color;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 16px;
@@ -87,7 +88,7 @@ select {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #cbcfff;
+    background-color: $main-color-hover;
     cursor: pointer;
   }
 
@@ -110,6 +111,55 @@ select {
   }
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+
+  &__button {
+    padding: 10px 16px;
+    margin: 0 4px;
+    font-size: 16px;
+    background-color: $main-color;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $main-color-hover;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+      &:hover {
+        background-color: $main-color;
+      }
+    }
+
+    @media (max-width: 768px) {
+      margin: 4px;
+    }
+  }
+
+  &__ellipsis {
+    margin: 0 4px;
+    font-size: 16px;
+    color: #888888;
+  }
+}
+
 @media (max-width: 480px) {
   .post_list_container {
     padding: 10px;
@@ -124,6 +174,10 @@ select {
     padding: 6px;
     font-size: 14px;
     margin-bottom: 10px;
+  }
+
+  .posts {
+    margin-bottom: 40px;
   }
 
   .post {
@@ -147,6 +201,19 @@ select {
       font-size: 15px;
       text-align: right;
       margin-top: 5px;
+    }
+  }
+
+  .pagination {
+    padding: 8px;
+    flex-wrap: wrap;
+
+    &__button {
+      padding: 8px 12px;
+      margin: 0 4px;
+      font-size: 15px;
+
+      margin: 4px;
     }
   }
 }
