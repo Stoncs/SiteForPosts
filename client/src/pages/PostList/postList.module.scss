@@ -1,11 +1,6 @@
-$accent-color: #c4dce6;
-$text-color: #333;
-$background-color: #f4f8f9;
-$main-color: #e5e7ff;
-$main-color-hover: #cbcfff;
-
-@import './../generalScss/fonts.scss';
-@import './../generalScss/colors.scss';
+@import './../../generalScss/fonts.scss';
+@import './../../generalScss/colors.scss';
+@import './../../generalScss/animations.scss';
 
 .post_list_container {
   max-width: 800px;
@@ -16,17 +11,6 @@ $main-color-hover: #cbcfff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   animation: fadeInContainer 0.5s ease-in-out;
   font-family: $font-primary;
-}
-
-@keyframes fadeInContainer {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .h1 {
@@ -82,10 +66,6 @@ select {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   color: $text-color;
-  ::first-letter {
-    text-transform: uppercase;
-  }
-  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: $main-color-hover;
@@ -96,17 +76,24 @@ select {
     font-weight: 400;
     font-size: 20px;
     margin-bottom: 10px;
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 
   &__body {
     font-size: 16px;
     line-height: 1.5em;
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 
   &__author {
     display: block;
     font-size: 16px;
     text-align: right;
+    color: $text-color-non-accent;
     margin-top: 10px;
   }
 }
@@ -146,7 +133,7 @@ select {
     transform: translate(-50%, 0) translateY(0px);
   }
   &__exit_active {
-    opacity: 0;
+    opacity: 1;
     transform: translate(-50%, 0) translateY(20px);
   }
   &__exit {

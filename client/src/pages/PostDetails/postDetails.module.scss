@@ -1,0 +1,198 @@
+// postDetails.module.scss
+
+@import './../../generalScss/fonts.scss';
+@import './../../generalScss/colors.scss';
+@import './../../generalScss/animations.scss';
+
+.post_details_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $background-color;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: fadeInContainer 0.5s ease-in-out;
+  font-family: $font-primary;
+}
+.post {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: $main-color;
+
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: $text-color;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &__body {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: $text-color;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &__author {
+    .author_name {
+      font-size: 16px;
+      color: $text-color;
+    }
+
+    .author_email {
+      font-size: 16px;
+      color: $text-color;
+    }
+
+    .author_company {
+      font-size: 16px;
+      color: $text-color;
+    }
+  }
+}
+
+.comments {
+  &__title {
+    padding: 20px;
+    font-size: 20px;
+    color: $text-color;
+  }
+}
+
+.comment {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: $main-color;
+
+  &__name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: $text-color;
+  }
+
+  &__email {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: $text-color;
+  }
+
+  &__body {
+    font-size: 16px;
+    color: $text-color;
+  }
+}
+
+.comment_form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+
+  &__title {
+    margin-left: 20px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: $text-color;
+  }
+
+  .form_label {
+    display: none;
+  }
+
+  .form_input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid $border-color-input;
+    border-radius: 5px;
+    font-size: 14px;
+
+    &:focus {
+      outline: 0;
+      border: 2px solid $input-focus-color;
+      box-shadow: 0 0 0 0.2rem $input-focus-box-shadow;
+    }
+  }
+
+  .form_textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 8px;
+    border: 1px solid $border-color-input;
+    border-radius: 5px;
+    font-family: $font-primary;
+    font-size: 14px;
+    grid-column: 1 / -1;
+
+    &:focus {
+      outline: 0;
+      border: 2px solid $input-focus-color;
+      box-shadow: 0 0 0 0.2rem $input-focus-box-shadow;
+    }
+  }
+
+  .form_button {
+    justify-self: left;
+    padding: 15px 20px;
+    font-size: 16px;
+    background-color: $accent-color;
+    border: none;
+    border-radius: 10px;
+    color: $text-color;
+    font-family: $font-primary;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $accent-color-hover;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .post {
+    &__title {
+      font-size: 20px;
+    }
+
+    &__body {
+      font-size: 16px;
+    }
+  }
+
+  .author_name {
+    font-size: 18px;
+  }
+
+  .author_email,
+  .author_company {
+    font-size: 14px;
+  }
+
+  .comments_title {
+    font-size: 18px;
+  }
+
+  .comment {
+    &__name {
+      font-size: 16px;
+    }
+
+    &__email {
+      font-size: 12px;
+    }
+
+    &__body {
+      font-size: 14px;
+    }
+  }
+}

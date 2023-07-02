@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchAllPosts, fetchPostsByUserId } from '../http/postAPI';
-import { fetchAllUsers } from '../http/userAPI';
+import { fetchAllPosts, fetchPostsByUserId } from '../../http/postAPI';
+import { fetchAllUsers } from '../../http/userAPI';
 import styles from './postList.module.scss';
 import { CSSTransition } from 'react-transition-group';
+import { useNavigate } from 'react-router';
+import { POST_PAGE_ROUTE } from '../../utils/routePaths';
 
 const PostList = () => {
   // Полученные данные о постах и пользователях
@@ -25,6 +27,8 @@ const PostList = () => {
   // Количество постов на одной странице
   const [postsPerPage, setPostsPerPage] = useState(10);
   const TOTAL_VISIBLE_PAGES = 5; // Количество видимых страниц
+
+  const navigate = useNavigate();
 
   const generateVisiblePages = () => {
     if (totalPages <= TOTAL_VISIBLE_PAGES) {
@@ -117,6 +121,10 @@ const PostList = () => {
     setIsListVisible(false);
   };
 
+  const onClickPost = (postId) => {
+    navigate(POST_PAGE_ROUTE.slice(0, -3) + postId);
+  };
+
   return (
     <div className={styles.post_list_container}>
       <h1 className={styles.h1}>Список постов</h1>
@@ -142,7 +150,11 @@ const PostList = () => {
       >
         <div className={styles.posts} ref={postsBlockRef}>
           {posts.map((post) => (
-            <div className={styles.post} key={post.id}>
+            <div
+              className={styles.post}
+              key={post.id}
+              onClick={() => onClickPost(post.id)}
+            >
               <h2 className={styles.post__title}>{post.title}</h2>
               <p className={styles.post__body}>{post.body}</p>
               <p className={styles.post__author}>
