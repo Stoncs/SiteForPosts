@@ -4,14 +4,23 @@ const url = "https://jsonplaceholder.typicode.com/users";
 
 class UserController {
   async getAll(req, res) {
-    const response = await axios.get(url);
-    return res.json(response.data);
+    try {
+      const response = await axios.get(url);
+      return res.json(response.data);
+    } catch (error) {
+      return res.status(500).json({ error: "Ошибка сервера" });
+    }
   }
 
   async getById(req, res) {
     const { id } = req.params;
-    const response = await axios.get(`${url}/${id}`);
-    return res.json(response.data);
+
+    try {
+      const response = await axios.get(`${url}/${id}`);
+      return res.json(response.data);
+    } catch (error) {
+      return res.status(500).json({ error: "Ошибка сервера" });
+    }
   }
 }
 
