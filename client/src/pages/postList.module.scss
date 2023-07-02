@@ -14,11 +14,11 @@ $main-color-hover: #cbcfff;
   background-color: $background-color;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeInContainer 0.5s ease-in-out;
   font-family: $font-primary;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInContainer {
   from {
     opacity: 0;
     transform: translateY(-20px);
@@ -111,6 +111,17 @@ select {
   }
 }
 
+@keyframes fadeInPagination {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translate(-50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translate(-50%, 0);
+  }
+}
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -122,6 +133,26 @@ select {
   left: 50%;
   transform: translate(-50%, 0);
   width: 100%;
+  animation: fadeInPagination 0.3s ease-in-out;
+
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  &__enter_active {
+    opacity: 0;
+    transform: translate(-50%, 0) translateY(20px);
+  }
+  &__enter {
+    opacity: 1;
+    transform: translate(-50%, 0) translateY(0px);
+  }
+  &__exit_active {
+    opacity: 0;
+    transform: translate(-50%, 0) translateY(20px);
+  }
+  &__exit {
+    opacity: 0;
+    transform: translate(-50%, 0) translateY(20px);
+  }
 
   @media (max-width: 768px) {
     flex-wrap: wrap;

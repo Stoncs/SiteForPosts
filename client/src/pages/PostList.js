@@ -11,26 +11,30 @@ const PostList = () => {
   const [users, setUsers] = useState([]);
   // Фильтрация по пользователю
   const [selectedUser, setSelectedUser] = useState('');
-  // Переменная для анимации
+  // Переменная для анимации списка постов
   const [isListVisible, setIsListVisible] = useState(true);
-  const nodeRef = useRef(null);
+  const [isPaginationVisible, setIsPaginationVisible] = useState(true);
+  const postsBlockRef = useRef(null);
+  const paginationBlock1 = useRef(null);
+  const paginationBlock2 = useRef(null);
+
   // Для пагинации
   const [visiblePages, setVisiblePages] = useState([]);
   // Номер текущей страницы
   const [currentPage, setCurrentPage] = useState(1);
   // Количество постов на одной странице
-  const [postsPerPage, setPostsPerPage] = useState(5);
-  const totalVisiblePages = 5; // Количество видимых страниц
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const TOTAL_VISIBLE_PAGES = 5; // Количество видимых страниц
 
   const generateVisiblePages = () => {
-    if (totalPages <= totalVisiblePages) {
+    if (totalPages <= TOTAL_VISIBLE_PAGES) {
       const visiblePages = Array.from(
         { length: totalPages },
         (_, index) => index + 1
       );
       setVisiblePages(visiblePages);
     } else {
-      const totalNeighbours = Math.floor(totalVisiblePages / 2); // Количество соседних страниц от текущей
+      const totalNeighbours = Math.floor(TOTAL_VISIBLE_PAGES / 2); // Количество соседних страниц от текущей
 
       let startPage = currentPage - totalNeighbours;
       let endPage = currentPage + totalNeighbours;
@@ -62,11 +66,11 @@ const PostList = () => {
       setPosts(data.posts);
       setTotalPages(data.totalPages);
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     generateVisiblePages();
-
     // При изменении выбранного пользователя, загружаем посты для выбранного пользователя
     if (selectedUser) {
       fetchPostsByUserId(selectedUser, currentPage, postsPerPage).then(
@@ -82,14 +86,18 @@ const PostList = () => {
       });
     }
 
-    console.log('here');
-    const timer = setTimeout(() => setIsListVisible(true), 300);
+    const timer = setTimeout(() => {
+      setIsListVisible(true);
+      setIsPaginationVisible(true);
+    }, 300);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line
   }, [selectedUser, currentPage, postsPerPage, totalPages]);
 
   const handleUserChange = (event) => {
     const selectedUserId = event.target.value;
     setIsListVisible(false);
+    setIsPaginationVisible(false);
     setSelectedUser(selectedUserId);
     setCurrentPage(1);
   };
@@ -120,9 +128,10 @@ const PostList = () => {
           </option>
         ))}
       </select>
+      {/* Анимация для появления и исчезновения постов */}
       <CSSTransition
         in={isListVisible}
-        nodeRef={nodeRef}
+        nodeRef={postsBlockRef}
         timeout={500}
         classNames={{
           enter: styles.posts__enter,
@@ -131,7 +140,7 @@ const PostList = () => {
           exit: styles.posts__exit,
         }}
       >
-        <div className={styles.posts} ref={nodeRef}>
+        <div className={styles.posts} ref={postsBlockRef}>
           {posts.map((post) => (
             <div className={styles.post} key={post.id}>
               <h2 className={styles.post__title}>{post.title}</h2>
@@ -143,10 +152,22 @@ const PostList = () => {
           ))}
         </div>
       </CSSTransition>
-      <div className={styles.pagination}>
-        {totalPages > 1 &&
-          (totalPages <= totalVisiblePages ? (
-            <>
+      {/* Если страница одна, то пагинация не нужна */}
+      {totalPages > 1 &&
+        (totalPages <= TOTAL_VISIBLE_PAGES ? (
+          <CSSTransition
+            in={isPaginationVisible}
+            nodeRef={paginationBlock1}
+            timeout={500}
+            onMountOnExit
+            classNames={{
+              enter: styles.pagination__enter,
+              enterActive: styles.pagination__enter_active,
+              exitActive: styles.pagination__exit_active,
+              exit: styles.pagination__exit,
+            }}
+          >
+            <div className={styles.pagination} ref={paginationBlock1}>
               {visiblePages.map((pageNumber) => (
                 <button
                   key={pageNumber}
@@ -159,9 +180,22 @@ const PostList = () => {
                   {pageNumber}
                 </button>
               ))}
-            </>
-          ) : (
-            <>
+            </div>
+          </CSSTransition>
+        ) : (
+          <CSSTransition
+            in={isPaginationVisible}
+            nodeRef={paginationBlock2}
+            timeout={500}
+            onMountOnExit
+            classNames={{
+              enter: styles.pagination__enter,
+              enterActive: styles.pagination__enter_active,
+              exitActive: styles.pagination__exit_active,
+              exit: styles.pagination__exit,
+            }}
+          >
+            <div className={styles.pagination} ref={paginationBlock2}>
               <button
                 className={styles.pagination__button}
                 disabled={currentPage === 1}
@@ -214,9 +248,9 @@ const PostList = () => {
               >
                 &rarr;
               </button>
-            </>
-          ))}
-      </div>
+            </div>
+          </CSSTransition>
+        ))}
     </div>
   );
 };
