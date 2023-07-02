@@ -6,7 +6,7 @@ class CommentController {
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/comments?&postId=${postId}`,
     );
-    return response.data;
+    return res.json(response.data);
   }
 
   async create(req, res) {
@@ -14,7 +14,7 @@ class CommentController {
     const response = await axios.post(
       `https://jsonplaceholder.typicode.com/comments?&postId=${postId}`,
     );
-    return response.data;
+    return res.json(response.data);
   }
 }
 

@@ -1,16 +1,10 @@
 const axios = require("axios");
 
-const url = "https://jsonplaceholder.typicode.com/posts";
+const url = "https://jsonplaceholder.typicode.com/users";
 
-class PostController {
+class UserController {
   async getAll(req, res) {
     const response = await axios.get(url);
-    return res.json(response.data);
-  }
-
-  async getByUser(req, res) {
-    const { userId } = req.params;
-    const response = await axios.get(`${url}?&userId=${userId}`);
     return res.json(response.data);
   }
 
@@ -21,4 +15,4 @@ class PostController {
   }
 }
 
-module.exports = new PostController();
+module.exports = new UserController();
