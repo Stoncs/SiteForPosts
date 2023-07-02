@@ -10,10 +10,14 @@ class CommentController {
   }
 
   async create(req, res) {
-    const { postId } = req.params;
-    const response = await axios.post(
-      `https://jsonplaceholder.typicode.com/comments?&postId=${postId}`,
-    );
+    const { postId, name, email, body } = req.body.params;
+
+    const response = await axios.post(`https://jsonplaceholder.typicode.com/comments`, {
+      postId,
+      name,
+      email,
+      body,
+    });
     return res.json(response.data);
   }
 }

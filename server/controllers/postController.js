@@ -24,6 +24,7 @@ class PostController {
   async getByUser(req, res) {
     const { userId } = req.params;
     const { page, limit } = req.query;
+
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
