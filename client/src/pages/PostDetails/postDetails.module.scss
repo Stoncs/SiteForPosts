@@ -40,19 +40,21 @@
   }
 
   &__author {
-    .author_name {
-      font-size: 16px;
-      color: $text-color;
-    }
+    .author {
+      &__name {
+        font-size: 16px;
+        color: $text-color;
+      }
 
-    .author_email {
-      font-size: 16px;
-      color: $text-color;
-    }
+      &__email {
+        font-size: 16px;
+        color: $text-color;
+      }
 
-    .author_company {
-      font-size: 16px;
-      color: $text-color;
+      &__company {
+        font-size: 16px;
+        color: $text-color;
+      }
     }
   }
 }
@@ -127,7 +129,7 @@
     width: 100%;
     min-height: 150px;
     padding: 8px;
-    border: 1px solid $border-color-input;
+    border: 2px solid $border-color-input;
     border-radius: 5px;
     font-family: $font-primary;
     font-size: 14px;
@@ -167,18 +169,22 @@
     &__body {
       font-size: 16px;
     }
+    &__author {
+      .author {
+        &__name {
+          font-size: 14px;
+        }
+        &__email,
+        &__company {
+          font-size: 14px;
+        }
+      }
+    }
   }
 
-  .author_name {
-    font-size: 18px;
-  }
-
-  .author_email,
-  .author_company {
-    font-size: 14px;
-  }
-
-  .comments_title {
+  .comments__title {
+    padding: 15px;
+    margin-left: 5px;
     font-size: 18px;
   }
 
@@ -193,6 +199,36 @@
 
     &__body {
       font-size: 14px;
+    }
+  }
+
+  .comment_form {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 10px;
+
+    &__title {
+      font-size: 18px;
+    }
+
+    .form_input {
+      font-size: 13px;
+
+      &:focus {
+        outline: 0;
+        border: 2px solid $input-focus-color;
+        box-shadow: 0 0 0 0.2rem $input-focus-box-shadow;
+      }
+    }
+
+    .form_textarea {
+      font-size: 13px;
+    }
+
+    .form_button {
+      justify-self: center;
+      padding: 15px 20px;
+      font-size: 15px;
     }
   }
 }

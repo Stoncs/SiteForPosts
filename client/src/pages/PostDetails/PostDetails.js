@@ -83,9 +83,9 @@ const PostDetails = () => {
         <div className={styles.post__body}>{post.body}</div>
         {user && (
           <div className={styles.post__author}>
-            <h2 className={styles.author_name}>Автор: {user.name}</h2>
-            <p className={styles.author_email}>Почта: {user.email}</p>
-            <p className={styles.author_company}>{user.company.name}</p>
+            <h2 className={styles.author__name}>Автор: {user.name}</h2>
+            <p className={styles.author__email}>Почта: {user.email}</p>
+            <p className={styles.author__company}>{user.company.name}</p>
           </div>
         )}
       </div>
@@ -100,7 +100,7 @@ const PostDetails = () => {
         </label>
         <input
           className={styles.form_input}
-          placeholder="Имя"
+          placeholder="Заголовок"
           type="text"
           id="name"
           name="name"
