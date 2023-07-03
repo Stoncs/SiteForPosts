@@ -7,6 +7,7 @@ import styles from './postDetails.module.scss';
 import { placeholdersComment } from '../../utils/strings/placeholdersComment';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPopup, unsetPopup } from '../../redux/actions/popup';
+import Loader from '../../components/Loader/Loader';
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -97,7 +98,7 @@ const PostDetails = () => {
   }, [post, id]);
 
   if (!post) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

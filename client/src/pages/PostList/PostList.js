@@ -5,6 +5,7 @@ import styles from './postList.module.scss';
 import { CSSTransition } from 'react-transition-group';
 import { useNavigate } from 'react-router';
 import { POST_PAGE_ROUTE } from '../../utils/routePaths';
+import Loader from '../../components/Loader/Loader';
 
 const PostList = () => {
   // Полученные данные о постах и пользователях
@@ -124,6 +125,10 @@ const PostList = () => {
   const onClickPost = (postId) => {
     navigate(POST_PAGE_ROUTE.slice(0, -3) + postId);
   };
+
+  if (!posts && !users) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.post_list_container}>
