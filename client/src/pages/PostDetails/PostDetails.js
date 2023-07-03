@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPostById } from '../../http/postAPI';
 import { fetchUserById } from '../../http/userAPI';
 import { fetchCommentsByPostId, postNewComment } from '../../http/messageAPI';
@@ -25,7 +25,7 @@ const PostDetails = () => {
   );
 
   const dispatch = useDispatch();
-  const popup = useSelector((state) => state.popup);
+  const navigate = useNavigate();
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
@@ -101,84 +101,85 @@ const PostDetails = () => {
   }
 
   return (
-    <div
-      className={`${styles.post_details_container} ${
-        popup.header ? styles.fixed : ''
-      }`}
-    >
-      <div className={styles.post}>
-        <h1 className={styles.post__title}>{post.title}</h1>
-        <div className={styles.post__body}>{post.body}</div>
-        {user && (
-          <div className={styles.post__author}>
-            <h2 className={styles.author__name}>Автор: {user.name}</h2>
-            <p className={styles.author__email}>Почта: {user.email}</p>
-            <p className={styles.author__company}>{user.company.name}</p>
-          </div>
-        )}
-      </div>
-      <h2 className={styles.comment_form__title}>Оставьте комментарий</h2>
-      <form
-        className={styles.comment_form}
-        onSubmit={handleSubmit}
-        method="POST"
-      >
-        <label className={styles.form_label} htmlFor="name">
-          Имя:
-        </label>
-        <input
-          className={styles.form_input}
-          placeholder="Заголовок"
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={handleNameChange}
-          required
-        />
+    <>
+      <button className={styles.back_button} onClick={() => navigate('/')}>
+        &larr;
+      </button>
+      <div className={styles.post_details_container}>
+        <div className={styles.post}>
+          <h1 className={styles.post__title}>{post.title}</h1>
+          <div className={styles.post__body}>{post.body}</div>
+          {user && (
+            <div className={styles.post__author}>
+              <h2 className={styles.author__name}>Автор: {user.name}</h2>
+              <p className={styles.author__email}>Почта: {user.email}</p>
+              <p className={styles.author__company}>{user.company.name}</p>
+            </div>
+          )}
+        </div>
+        <h2 className={styles.comment_form__title}>Оставьте комментарий</h2>
+        <form
+          className={styles.comment_form}
+          onSubmit={handleSubmit}
+          method="POST"
+        >
+          <label className={styles.form_label} htmlFor="name">
+            Имя:
+          </label>
+          <input
+            className={styles.form_input}
+            placeholder="Заголовок"
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={handleNameChange}
+            required
+          />
 
-        <label className={styles.form_label} htmlFor="email">
-          Почта:
-        </label>
-        <input
-          className={styles.form_input}
-          placeholder="Почта"
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        />
+          <label className={styles.form_label} htmlFor="email">
+            Почта:
+          </label>
+          <input
+            className={styles.form_input}
+            placeholder="Почта"
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
 
-        <label className={styles.form_label} htmlFor="comment">
-          Комментарий:
-        </label>
-        <textarea
-          className={styles.form_textarea}
-          placeholder={placeholderComment}
-          id="comment"
-          name="comment"
-          value={comment}
-          onChange={handleCommentChange}
-          rows={4}
-          required
-        />
-        <button className={styles.form_button} type="submit">
-          Отправить комментарий
-        </button>
-      </form>
-      <div className={styles.comments}>
-        <h2 className={styles.comments__title}>Комментарии</h2>
-        {comments.map((comment) => (
-          <div key={comment.id} className={styles.comment}>
-            <p className={styles.comment__name}>{comment.name}</p>
-            <p className={styles.comment__email}>{comment.email}</p>
-            <p className={styles.comment__body}>{comment.body}</p>
-          </div>
-        ))}
+          <label className={styles.form_label} htmlFor="comment">
+            Комментарий:
+          </label>
+          <textarea
+            className={styles.form_textarea}
+            placeholder={placeholderComment}
+            id="comment"
+            name="comment"
+            value={comment}
+            onChange={handleCommentChange}
+            rows={4}
+            required
+          />
+          <button className={styles.form_button} type="submit">
+            Отправить комментарий
+          </button>
+        </form>
+        <div className={styles.comments}>
+          <h2 className={styles.comments__title}>Комментарии</h2>
+          {comments.map((comment) => (
+            <div key={comment.id} className={styles.comment}>
+              <p className={styles.comment__name}>{comment.name}</p>
+              <p className={styles.comment__email}>{comment.email}</p>
+              <p className={styles.comment__body}>{comment.body}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
