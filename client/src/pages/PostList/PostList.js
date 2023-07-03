@@ -6,6 +6,8 @@ import { CSSTransition } from 'react-transition-group';
 import { useNavigate } from 'react-router';
 import { POST_PAGE_ROUTE } from '../../utils/routePaths';
 import Loader from '../../components/Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { setPopup } from '../../redux/actions/popup';
 
 const PostList = () => {
   // Полученные данные о постах и пользователях
@@ -29,6 +31,7 @@ const PostList = () => {
   const [postsPerPage, setPostsPerPage] = useState(10);
   const TOTAL_VISIBLE_PAGES = 5; // Количество видимых страниц
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const generateVisiblePages = () => {
@@ -65,30 +68,50 @@ const PostList = () => {
   useEffect(() => {
     generateVisiblePages();
 
-    fetchAllUsers().then((users) => setUsers(users));
+    try {
+      fetchAllUsers().then((users) => setUsers(users));
 
-    fetchAllPosts(currentPage, postsPerPage).then((data) => {
-      setPosts(data.posts);
-      setTotalPages(data.totalPages);
-    });
+      fetchAllPosts(currentPage, postsPerPage).then((data) => {
+        setPosts(data.posts);
+        setTotalPages(data.totalPages);
+      });
+    } catch (error) {
+      dispatch(
+        setPopup({
+          type: 'error',
+          header: 'Ошибка!',
+          message: 'Что-то пошло не так',
+        })
+      );
+    }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     generateVisiblePages();
     // При изменении выбранного пользователя, загружаем посты для выбранного пользователя
-    if (selectedUser) {
-      fetchPostsByUserId(selectedUser, currentPage, postsPerPage).then(
-        (data) => {
+    try {
+      if (selectedUser) {
+        fetchPostsByUserId(selectedUser, currentPage, postsPerPage).then(
+          (data) => {
+            setPosts(data.posts);
+            setTotalPages(data.totalPages);
+          }
+        );
+      } else {
+        fetchAllPosts(currentPage, postsPerPage).then((data) => {
           setPosts(data.posts);
           setTotalPages(data.totalPages);
-        }
+        });
+      }
+    } catch (error) {
+      dispatch(
+        setPopup({
+          type: 'error',
+          header: 'Ошибка!',
+          message: 'Что-то пошло не так',
+        })
       );
-    } else {
-      fetchAllPosts(currentPage, postsPerPage).then((data) => {
-        setPosts(data.posts);
-        setTotalPages(data.totalPages);
-      });
     }
 
     const timer = setTimeout(() => {

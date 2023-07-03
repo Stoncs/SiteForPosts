@@ -66,6 +66,7 @@ select {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   color: $text-color;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: $main-color-hover;
@@ -153,6 +154,7 @@ select {
     border: 1px solid #dddddd;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 
     &:hover {
       background-color: $main-color-hover;
