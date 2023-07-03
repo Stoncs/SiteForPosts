@@ -10,12 +10,15 @@ import { setPopup, unsetPopup } from '../../redux/actions/popup';
 import Loader from '../../components/Loader/Loader';
 
 const PostDetails = () => {
+  // id поста
   const { id } = useParams();
 
+  // Полученные данные с сервера
   const [post, setPost] = useState(null);
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState([]);
 
+  // Значения полей ввода
   const [comment, setComment] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -43,7 +46,7 @@ const PostDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Отправить данные комментария на сервер
+    // Отправить комментарий на сервер
     try {
       await postNewComment(id, name, email, comment).then((data) => {
         if (

@@ -29,11 +29,13 @@ const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // Количество постов на одной странице
   const [postsPerPage, setPostsPerPage] = useState(10);
-  const TOTAL_VISIBLE_PAGES = 5; // Количество видимых страниц
+  // Количество видимых страниц
+  const TOTAL_VISIBLE_PAGES = 5;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Функция, возвращающая массив страниц для пагинации
   const generateVisiblePages = () => {
     if (totalPages <= TOTAL_VISIBLE_PAGES) {
       const visiblePages = Array.from(
@@ -42,7 +44,8 @@ const PostList = () => {
       );
       setVisiblePages(visiblePages);
     } else {
-      const totalNeighbours = Math.floor(TOTAL_VISIBLE_PAGES / 2); // Количество соседних страниц от текущей
+      // Количество соседних страниц от текущей
+      const totalNeighbours = Math.floor(TOTAL_VISIBLE_PAGES / 2);
 
       let startPage = currentPage - totalNeighbours;
       let endPage = currentPage + totalNeighbours;
@@ -118,6 +121,7 @@ const PostList = () => {
       setIsListVisible(true);
       setIsPaginationVisible(true);
     }, 300);
+
     return () => clearTimeout(timer);
     // eslint-disable-next-line
   }, [selectedUser, currentPage, postsPerPage, totalPages]);
@@ -149,7 +153,7 @@ const PostList = () => {
     navigate(POST_PAGE_ROUTE.slice(0, -3) + postId);
   };
 
-  if (!posts && !users) {
+  if (!posts || !users) {
     return <Loader />;
   }
 
