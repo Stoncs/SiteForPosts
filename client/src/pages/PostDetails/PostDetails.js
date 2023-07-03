@@ -5,6 +5,8 @@ import { fetchUserById } from '../../http/userAPI';
 import { fetchCommentsByPostId, postNewComment } from '../../http/messageAPI';
 import styles from './postDetails.module.scss';
 import { placeholdersComment } from '../../utils/strings/placeholdersComment';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPopup, unsetPopup } from '../../redux/actions/popup';
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -21,6 +23,9 @@ const PostDetails = () => {
   const [placeholderComment, setPlacholderComment] = useState(
     'Оставьте свой комментарий...'
   );
+
+  const dispatch = useDispatch();
+  const popup = useSelector((state) => state.popup);
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
@@ -46,17 +51,36 @@ const PostDetails = () => {
           data.email === email &&
           data.body === comment
         ) {
-          alert('Успешно');
+          dispatch(
+            setPopup({
+              type: 'normal',
+              header: 'Успешно!',
+              message: 'Вы оставили комментарий',
+            })
+          );
+          // Сбросить значения полей после отправки комментария
+          setComment('');
+          setName('');
+          setEmail('');
+        } else {
+          dispatch(
+            setPopup({
+              type: 'error',
+              header: 'Ошибка!',
+              message: 'Что-то пошло не так',
+            })
+          );
         }
       });
     } catch (error) {
-      console.log(error.message);
+      dispatch(
+        setPopup({
+          type: 'error',
+          header: 'Ошибка!',
+          message: 'Что-то пошло не так',
+        })
+      );
     }
-
-    // Сбросить значения полей после отправки комментария
-    setComment('');
-    setName('');
-    setEmail('');
   };
 
   useEffect(() => {
@@ -77,7 +101,11 @@ const PostDetails = () => {
   }
 
   return (
-    <div className={styles.post_details_container}>
+    <div
+      className={`${styles.post_details_container} ${
+        popup.header ? styles.fixed : ''
+      }`}
+    >
       <div className={styles.post}>
         <h1 className={styles.post__title}>{post.title}</h1>
         <div className={styles.post__body}>{post.body}</div>
